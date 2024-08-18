@@ -5,7 +5,7 @@ int main(){
     setlocale(0, "Portuguese");
     int percentual_reajuste;
     float salario_mensal, salario_final;
-    printf("Qual é o seu salário mensal, antes do reajuste? ");
+    printf("Quanto é o seu salário mensal, antes do reajuste? ");
     scanf("%f", &salario_mensal);
     printf("Qual é o perceltual de reajuste?(sem a porcentagem) ");
     scanf("%d", &percentual_reajuste);

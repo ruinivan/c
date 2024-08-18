@@ -4,7 +4,7 @@
 int main(){
     setlocale(0, "Portuguese");
     int total, branco, nulo, valido, porcent_branco, porcent_nulo, porcent_valido;
-    printf("Qual é o total de eleitor do município? ");
+    printf("Quanto é o total de eleitor desse município? ");
     scanf("%d", &total);
     printf("Qual é a quantidade de votos branco? ");
     scanf("%d", &branco);
@@ -15,6 +15,6 @@ int main(){
     porcent_branco = (branco/(float)total)*100;
     porcent_nulo = (nulo/(float)total)*100;
     porcent_valido = (valido/(float)total)*100;
-    printf("A porcentagem de votos: \nbranco: %d%%. \nnulo: %d%%. \nvalido: %d%%.", porcent_branco, porcent_nulo, porcent_valido);
+    printf("A porcentagem de votos: \nbrancos: %d%%. \nnulos: %d%%. \nvalidos: %d%%.", porcent_branco, porcent_nulo, porcent_valido);
     return 0;
 }

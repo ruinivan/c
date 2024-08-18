@@ -7,6 +7,6 @@ int main(){
     printf("Escreva um número: ");
     scanf("%d", &a);
     b=--a;
-    printf("O antecessor do seu número é %d", b);
+    printf("O antecessor do seu número digitado é %d", b);
     return 0;
 }

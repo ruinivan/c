@@ -5,7 +5,7 @@ int main(){
     setlocale(0, "Portuguese");
     int carros;
     float salario_fixo, comissao, valor_vendas, salario_total;
-    printf("Qual é o seu salario fixo? ");
+    printf("Quanto é o seu salario fixo? ");
     scanf("%f", &salario_fixo);
     printf("Quanto de comissão você ganha por carro vendido? ");
     scanf("%f", &comissao);
