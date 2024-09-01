@@ -17,6 +17,6 @@ int main(){
         printf("A média é de %.2f", (n1+n2)/2);
         printf("\nNOVO CÁLCULO (S/N)? ");
         scanf(" %c", &dnv);
-    }while (dnv=='S');
+    }while (dnv=='S' || dnv=='s');
     return 0;
 }
