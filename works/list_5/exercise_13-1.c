@@ -7,10 +7,8 @@ int main(){
     setlocale(LC_ALL,"Portuguese");
     float vet[50];
     int i, j, rep=0, n=0, temp, temp1=0, nun[1275];
-    for(i=0;i<50;i++){
-        printf("Digite o %dº número: ", i+1);
-        scanf("%f", &vet[i]);
-    }
+    srand(time(NULL));
+    for(i=0;i<50;i++) vet[i] = rand() % 100;
     for(i=0;i<50;i++){
         temp = rep;
         for(j=temp1;j<50;j++){
