@@ -5,7 +5,7 @@
 int main() {
 	setlocale(LC_ALL,"portuguese");
     int tam_max = INT_MAX; 
-    int tam_min=INT_MIN;
+    int tam_min = INT_MIN;
     printf("| TIPO                   | MINIMO                | MAXIMO              \n");
     printf("|-----------------------------------------------------------------------\n");
     printf("| char                    %d                   %d                 \n", CHAR_MIN, CHAR_MAX);
