@@ -14,7 +14,7 @@ int main(){
     }while(quantidade<=0 || quantidade>10000);
     for(int m=0;m<quantidade;m++){
         do{
-            printf("Informe o codigo da inteligencia: ");
+            printf("Informe o codigo da inteligencia desse codigo: ");
             scanf("%d", &b);
             getchar(); //Limpar o buffer
             if(b< -100 || b>100) printf("O codigo de inteligencia so pode entre entre -100 e 100\n");
