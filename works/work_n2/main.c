@@ -9,16 +9,16 @@ int main(){
     fantasma.morrer = &pacman.poder;
 
     do{
-        pacman.local.y++;           /* andar pra cima */
+        if(pacman.local.y-1 != parede.local.x) pacman.local.y--;           /* andar pra cima */
     }while(pacman.andar=='w');
     do{
-        pacman.local.x--;           /* andar pra esquerda */
+        if(pacman.local.x-1 != parede.local.x) pacman.local.x--;           /* andar pra esquerda */
     }while(pacman.andar=='a');
     do{
-        pacman.local.y++;           /* andar pra baixo */
+        if(pacman.local.y+1 != parede.local.x) pacman.local.y++;           /* andar pra baixo */
     }while(pacman.andar=='s');
     do{
-        pacman.local.x++;           /* andar pra direita */
+        if(pacman.local.x+1 != parede.local.x) pacman.local.x++;           /* andar pra direita */
     }while(pacman.andar=='d');
 
     if(((pacman.local.x == fantasma1.local.x && pacman.local.y == fantasma1.local.y) || (pacman.local.x == fantasma2.local.x && pacman.local.y == fantasma2.local.y) || (pacman.local.x == fantasma3.local.x && pacman.local.y == fantasma3.local.y) || (pacman.local.x == fantasma4.local.x && pacman.local.y == fantasma4.local.y) || (pacman.local.x == fantasma5.local.x && pacman.local.y == fantasma5.local.y) || (pacman.local.x == fantasma6.local.x && pacman.local.y == fantasma6.local.y)) && pacman.poder == 0) /*GAME OVER*/ {
@@ -43,5 +43,6 @@ int main(){
     if((pacman.local.x == fantasma6.local.x && pacman.local.y == fantasma6.local.y) && pacman.poder == 1) /*Kill fantasma6*/ {
 
     }
+
     return 0;
 }
