@@ -1,16 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include "pacman.h"
+
+void assombrar(fantasmas *fantasma){    /*Fantasma vivo andar aleatoriamente*/
+    int andar = rand() % 4;
+    switch (andar){
+    case 0:
+        fantasma->local.y--;            /*fantasma pra cima*/
+        sleep(1);
+        break;
+    case 1:
+        fantasma->local.x--;            /*fantasma pra esquerda*/
+        sleep(1);
+        break;
+    case 2:
+        fantasma->local.y++;            /*fantasma pra baixo*/
+        sleep(1);
+        break;
+    case 3:
+        fantasma->local.x++;            /*fantasma pra direita*/
+        sleep(1);
+        break;
+    default:
+        break;
+    }
+}
 
 int main(){
     int fim = 0;
     int total_moedas = 0;
     score.pontos = 0;
     pacman.poder = 0;
-    fantasma fantasma[4];       /*4 fantasmas*/
+
+    fantasmas fantasma[4];       /*4 fantasmas*/
+    for(int i=0; i<4; i++) fantasma[i].vida = 1;
+
     frutas *fruta[5];           /*5 frutas*/
     moedas *moeda[50];          /*50 moedas*/
+
+    srand(time(NULL));
 
     for(int i=0; i<2; i+=fim){
 
@@ -31,23 +61,25 @@ int main(){
             sleep(1);                                   /*Cooldown para andar*/
         }
 
-        if(((pacman.local.x == fantasma[0].local.x && pacman.local.y == fantasma[0].local.y) || (pacman.local.x == fantasma[1].local.x && pacman.local.y == fantasma[1].local.y) || (pacman.local.x == fantasma[2].local.x && pacman.local.y == fantasma[2].local.y) || (pacman.local.x == fantasma[3].local.x && pacman.local.y == fantasma[3].local.y)) && pacman.poder == 0) /*GAME OVER*/ {
+        for(int i=0; i<4; i++){
+            if(fantasma[i].vida == 1){
+                assombrar(&fantasma[i]);                /*funcao para o fantasma andar(no meio do jogo)*/
+            }
+        }
+
+        for(int i=0; i<4; i++){
+            if((pacman.local.x == fantasma[i].local.x && pacman.local.y == fantasma[i].local.y) && pacman.poder == 0){  /*GAME OVER*/
+
+            }
+        }
+
+        for(int i=0; i<4; i++){
+            if((pacman.local.x == fantasma[i].local.x && pacman.local.y == fantasma[i].local.y) && pacman.poder == 1){ /*kill fantasma*/
+            score.pontos += 50;
+            fantasma[i].vida = 0;
+            }
+        }
         
-        }
-
-        if((pacman.local.x == fantasma[0].local.x && pacman.local.y == fantasma[0].local.y) && pacman.poder == 1) /*Kill fantasma[0]*/ {
-            score.pontos += 150;
-        }
-        if((pacman.local.x == fantasma[1].local.x && pacman.local.y == fantasma[1].local.y) && pacman.poder == 1) /*Kill fantasma[1]*/ {
-            score.pontos += 150;
-        }
-        if((pacman.local.x == fantasma[2].local.x && pacman.local.y == fantasma[2].local.y) && pacman.poder == 1) /*Kill fantasma[3]*/ {
-            score.pontos += 150;
-        }
-        if((pacman.local.x == fantasma[3].local.x && pacman.local.y == fantasma[3].local.y) && pacman.poder == 1) /*Kill fantasma[4]*/ {
-            score.pontos += 150;
-        }
-
         for(int i=0; i<50; i++){
             if(moeda[i]->local.x == pacman.local.x && moeda[i]->local.y == pacman.local.y){         /*Coletar Moeda*/
                 score.pontos += 10;

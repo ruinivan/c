@@ -9,7 +9,7 @@ typedef struct{
 typedef struct{
     posicao local;
     int vida;
-}fantasma;
+}fantasmas;
 
 typedef struct{
     posicao local;
