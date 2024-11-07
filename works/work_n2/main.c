@@ -69,7 +69,7 @@ int main(){
 
         for(int i=0; i<4; i++){
             if((pacman.local.x == fantasma[i].local.x && pacman.local.y == fantasma[i].local.y) && pacman.poder == 0){  /*GAME OVER*/
-
+            
             }
         }
 
