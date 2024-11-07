@@ -6,6 +6,11 @@ typedef struct{
     int y;
 }posicao;
 
+typedef struct{
+    posicao local;
+    int vida;
+}fantasma;
+
 struct{
     posicao local;
     char andar;
@@ -17,35 +22,6 @@ struct{
     posicao local_final;
     int *reviver;
 }spawn;
-struct{
-    posicao local;
-    int vida;
-}fantasma1;
-
-struct{
-    posicao local;
-    int vida;
-}fantasma2;
-
-struct{
-    posicao local;
-    int vida;
-}fantasma3;
-
-struct{
-    posicao local;
-    int vida;
-}fantasma4;
-
-struct{
-    posicao local;
-    int vida;
-}fantasma5;
-
-struct{
-    posicao local;
-    int vida;
-}fantasma6;
 
 struct{
     posicao local;

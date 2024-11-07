@@ -6,6 +6,7 @@ int main(){
     moedas.valor = 100;
     pacman.poder = 0;
     fruta.poder = &pacman.poder;
+    fantasma fantasma1, fantasma2, fantasma3, fantasma4, fantasma5, fantasma6;
 
     while((pacman.local.y-1 != parede.local.y && pacman.local.x != parede.local.x) && pacman.andar=='w'){
         pacman.local.y--;                           /*andar pra cima*/
