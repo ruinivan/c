@@ -11,6 +11,10 @@ typedef struct{
     int vida;
 }fantasma;
 
+typedef struct{
+    posicao local;
+    int valor;
+}moedas;
 struct{
     posicao local;
     char andar;
@@ -31,14 +35,9 @@ struct{
     int pontos;
 }score;
 
-struct{
-    posicao local;
-    int valor;
-}moedas;
-
-struct{
+typedef struct{
     posicao local;
     int *poder;
-}fruta;
+}frutas;
 
 #endif

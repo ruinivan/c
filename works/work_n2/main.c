@@ -3,10 +3,14 @@
 
 int main(){
     score.pontos = 0;
-    moedas.valor = 100;
     pacman.poder = 0;
-    fruta.poder = &pacman.poder;
-    fantasma fantasma1, fantasma2, fantasma3, fantasma4, fantasma5, fantasma6;
+    fantasma fantasma[6];
+
+    frutas fruta[5];                                /*5 frutas*/
+    for(int i=0; i<5; i++) fruta[i].poder = &pacman.poder;
+
+    moedas moeda[50];                               /*50 moedas*/
+    for(int i=0; i<50; i++) moeda[i].valor = 100;
 
     while((pacman.local.y-1 != parede.local.y && pacman.local.x != parede.local.x) && pacman.andar=='w'){
         pacman.local.y--;                           /*andar pra cima*/
@@ -21,34 +25,34 @@ int main(){
         pacman.local.x++;                           /*andar pra direita*/
     }
 
-    if(((pacman.local.x == fantasma1.local.x && pacman.local.y == fantasma1.local.y) || (pacman.local.x == fantasma2.local.x && pacman.local.y == fantasma2.local.y) || (pacman.local.x == fantasma3.local.x && pacman.local.y == fantasma3.local.y) || (pacman.local.x == fantasma4.local.x && pacman.local.y == fantasma4.local.y) || (pacman.local.x == fantasma5.local.x && pacman.local.y == fantasma5.local.y) || (pacman.local.x == fantasma6.local.x && pacman.local.y == fantasma6.local.y)) && pacman.poder == 0) /*GAME OVER*/ {
+    if(((pacman.local.x == fantasma[0].local.x && pacman.local.y == fantasma[0].local.y) || (pacman.local.x == fantasma[1].local.x && pacman.local.y == fantasma[1].local.y) || (pacman.local.x == fantasma[2].local.x && pacman.local.y == fantasma[2].local.y) || (pacman.local.x == fantasma[3].local.x && pacman.local.y == fantasma[3].local.y) || (pacman.local.x == fantasma[4].local.x && pacman.local.y == fantasma[4].local.y) || (pacman.local.x == fantasma[5].local.x && pacman.local.y == fantasma[5].local.y)) && pacman.poder == 0) /*GAME OVER*/ {
         
     }
 
-    if((pacman.local.x == fantasma1.local.x && pacman.local.y == fantasma1.local.y) && pacman.poder == 1) /*Kill fantasma1*/ {
+    if((pacman.local.x == fantasma[0].local.x && pacman.local.y == fantasma[0].local.y) && pacman.poder == 1) /*Kill fantasma[0]*/ {
 
         score.pontos += 150;
     }
-    if((pacman.local.x == fantasma2.local.x && pacman.local.y == fantasma2.local.y) && pacman.poder == 1) /*Kill fantasma2*/ {
+    if((pacman.local.x == fantasma[1].local.x && pacman.local.y == fantasma[1].local.y) && pacman.poder == 1) /*Kill fantasma[1]*/ {
 
         score.pontos += 150;
     }
-    if((pacman.local.x == fantasma3.local.x && pacman.local.y == fantasma3.local.y) && pacman.poder == 1) /*Kill fantasma3*/ {
+    if((pacman.local.x == fantasma[2].local.x && pacman.local.y == fantasma[2].local.y) && pacman.poder == 1) /*Kill fantasma[3]*/ {
 
         score.pontos += 150;
     }
-    if((pacman.local.x == fantasma4.local.x && pacman.local.y == fantasma4.local.y) && pacman.poder == 1) /*Kill fantasma4*/ {
+    if((pacman.local.x == fantasma[3].local.x && pacman.local.y == fantasma[3].local.y) && pacman.poder == 1) /*Kill fantasma[4]*/ {
 
         score.pontos += 150;
     }
-    if((pacman.local.x == fantasma5.local.x && pacman.local.y == fantasma5.local.y) && pacman.poder == 1) /*Kill fantasma5*/ {
+    if((pacman.local.x == fantasma[4].local.x && pacman.local.y == fantasma[4].local.y) && pacman.poder == 1) /*Kill fantasma[4]*/ {
 
         score.pontos += 150;
     }
-    if((pacman.local.x == fantasma6.local.x && pacman.local.y == fantasma6.local.y) && pacman.poder == 1) /*Kill fantasma6*/ {
+    if((pacman.local.x == fantasma[5].local.x && pacman.local.y == fantasma[5].local.y) && pacman.poder == 1) /*Kill fantasma[5]*/ {
 
         score.pontos += 150;
     }
-
+    
     return 0;
 }
