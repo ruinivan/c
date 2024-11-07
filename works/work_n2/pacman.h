@@ -13,8 +13,12 @@ typedef struct{
 
 typedef struct{
     posicao local;
-    int valor;
+}frutas;
+
+typedef struct{
+    posicao local;
 }moedas;
+
 struct{
     posicao local;
     char andar;
@@ -24,7 +28,6 @@ struct{
 struct{
     posicao local_inicial;
     posicao local_final;
-    int *reviver;
 }spawn;
 
 struct{
@@ -34,10 +37,5 @@ struct{
 struct{
     int pontos;
 }score;
-
-typedef struct{
-    posicao local;
-    int *poder;
-}frutas;
 
 #endif
