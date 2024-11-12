@@ -30,12 +30,4 @@ struct{
     posicao local_final;
 }spawn;
 
-struct{
-    posicao local;
-}parede;
-
-struct{
-    int pontos;
-}score;
-
 #endif
