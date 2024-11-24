@@ -1,33 +1,33 @@
 #ifndef PACMAN_H
 #define PACMAN_H
 
-typedef struct{
+typedef struct {
     int x;
     int y;
-}posicao;
+} posicao;
 
-typedef struct{
+typedef struct {
     posicao local;
     int vida;
-}fantasmas;
+} fantasmas;
 
-typedef struct{
+typedef struct {
     posicao local;
-}frutas;
+} frutas;
 
-typedef struct{
+typedef struct {
     posicao local;
-}moedas;
+} moedas;
 
-struct{
+struct {  
     posicao local;
     char andar;
     int poder;
-}pacman;
+} pacman; 
 
-struct{
+struct {
     posicao local_inicial;
     posicao local_final;
-}spawn;
+} spawn;
 
 #endif

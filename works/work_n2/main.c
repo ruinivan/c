@@ -1,41 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <conio.h>
 #include <windows.h>
+#include <conio.h>
 #include "pacman.h"
 
-void carregar_fase(int fase, int parede[25][25]) {
-    for (int i = 0; i < 25; i++) {
-        for (int j = 0; j < 25; j++) {
-            parede[i][j] = 0; // Limpa o mapa
-        }
-    }
+void carregar_fase(int fase, int parede[10][50]) {
     if (fase == 0) {
         // Fase 1: Paredes externas e um obstáculo no meio
-        for (int i = 0; i < 25; i++) {
-            parede[0][i] = parede[24][i] = 1;
-            parede[i][0] = parede[i][24] = 1;
-        }
         for (int i = 8; i < 16; i++) {
             parede[12][i] = 1;
         }
     } else if (fase == 1) {
         // Fase 2: Labirinto com caminhos estreitos
-        for (int i = 0; i < 25; i++) {
-            parede[0][i] = parede[24][i] = 1;
-            parede[i][0] = parede[i][24] = 1;
-        }
         for (int i = 5; i < 20; i++) {
             parede[i][10] = 1;
             parede[i][15] = 1;
         }
     } else if (fase == 2) {
         // Fase 3: Paredes em padrão circular
-        for (int i = 0; i < 25; i++) {
-            parede[0][i] = parede[24][i] = 1;
-            parede[i][0] = parede[i][24] = 1;
-        }
         for (int i = 5; i < 20; i++) {
             parede[5][i] = parede[20][i] = 1;
         }
@@ -45,7 +28,7 @@ void carregar_fase(int fase, int parede[25][25]) {
     }
 }
 
-void inicializar_moedas(moedas *moeda[], int quant_moeda, int parede[25][25]) {
+void inicializar_moedas(moedas *moeda[], int quant_moeda, int parede[10][50]) {
     for (int i = 0; i < quant_moeda; i++) {
         moeda[i] = (moedas *)malloc(sizeof(moedas));
         do {
@@ -55,7 +38,7 @@ void inicializar_moedas(moedas *moeda[], int quant_moeda, int parede[25][25]) {
     }
 }
 
-void inicializar_frutas(frutas *fruta[], int quant_frutas, int parede[25][25]) {
+void inicializar_frutas(frutas *fruta[], int quant_frutas, int parede[10][50]) {
     for (int i = 0; i < quant_frutas; i++) {
         fruta[i] = (frutas *)malloc(sizeof(frutas));
         do {
@@ -65,10 +48,10 @@ void inicializar_frutas(frutas *fruta[], int quant_frutas, int parede[25][25]) {
     }
 }
 
-void desenhar_mapa(int parede[25][25], fantasmas fantasma[], moedas *moeda[], frutas *fruta[], int quant_moeda, int quant_frutas) {
+void desenhar_mapa(int parede[10][50], fantasmas fantasma[], moedas *moeda[], frutas *fruta[], int quant_moeda, int quant_frutas) {
     system("cls"); // Limpa o console no Windows
-    for (int i = 0; i < 25; i++) {
-        for (int j = 0; j < 25; j++) {
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 50; j++) {
             if (parede[i][j] == 1) {
                 printf("#"); // Parede
             } else {
@@ -82,15 +65,15 @@ void desenhar_mapa(int parede[25][25], fantasmas fantasma[], moedas *moeda[], fr
                     }
                 }
                 // Verifica moedas
-                for (int m = 0; m < quant_moeda && !desenhado; m++) {
-                    if (moeda[m] && moeda[m]->local.x == i && moeda[m]->local.y == j) {
+                for (int m = 0; m < quant_moeda; m++) {
+                    if (!desenhado && moeda[m] && moeda[m]->local.x == i && moeda[m]->local.y == j) {
                         printf("o");
                         desenhado = 1;
                     }
                 }
                 // Verifica frutas
-                for (int fr = 0; fr < quant_frutas && !desenhado; fr++) {
-                    if (fruta[fr] && fruta[fr]->local.x == i && fruta[fr]->local.y == j) {
+                for (int fr = 0; fr < quant_frutas; fr++) {
+                    if (!desenhado && fruta[fr] && fruta[fr]->local.x == i && fruta[fr]->local.y == j) {
                         printf("0");
                         desenhado = 1;
                     }
@@ -108,63 +91,103 @@ void desenhar_mapa(int parede[25][25], fantasmas fantasma[], moedas *moeda[], fr
         printf("\n");
     }
 }
-
-void mover_pacman(int parede[25][25], int andar_cooldown) {
+void mover_pacman(int parede[10][50]) {
     if (_kbhit()) {
-        char tecla = _getch();
+        char tecla = _getch();  // Usa _getch() ao invés de getch()
         switch (tecla) {
-            case 'w':
-                if (parede[pacman.local.x - 1][pacman.local.y] == 0)
+            case 'w': // Cima
+                if (pacman.local.x > 0 && parede[pacman.local.x - 1][pacman.local.y] == 0)
                     pacman.local.x--;
                 break;
-            case 'a':
-                if (parede[pacman.local.x][pacman.local.y - 1] == 0)
+            case 'a': // Esquerda
+                if (pacman.local.y > 0 && parede[pacman.local.x][pacman.local.y - 1] == 0)
                     pacman.local.y--;
                 break;
-            case 's':
-                if (parede[pacman.local.x + 1][pacman.local.y] == 0)
+            case 's': // Baixo
+                if (pacman.local.x < 9 && parede[pacman.local.x + 1][pacman.local.y] == 0)
                     pacman.local.x++;
                 break;
-            case 'd':
-                if (parede[pacman.local.x][pacman.local.y + 1] == 0)
+            case 'd': // Direita
+                if (pacman.local.y < 49 && parede[pacman.local.x][pacman.local.y + 1] == 0)
                     pacman.local.y++;
                 break;
         }
-        Sleep(andar_cooldown * 1000);
     }
 }
-int main(){
-    int moedas_coletadas = 0, quant_moeda = 50;             /*config quantia das moedas*/
-    int quant_frutas = 5, tempo_poder = 10;                 /*config das frutas*/
-    int andar_cooldown = 0.5;                               /*tempo pra andar*/
+void mover_fantasmas(fantasmas *fantasmas, int num_fantasmas, int parede[10][50]) {
+    for (int i = 0; i < num_fantasmas; i++) {
+        int direcao = rand() % 4;
+        switch (direcao) {
+            case 0: // Cima
+                if (fantasmas[i].local.x > 0 && parede[fantasmas[i].local.x - 1][fantasmas[i].local.y] == 0)
+                    fantasmas[i].local.x--;
+                break;
+            case 1: // Esquerda
+                if (fantasmas[i].local.y > 0 && parede[fantasmas[i].local.x][fantasmas[i].local.y - 1] == 0)
+                    fantasmas[i].local.y--;
+                break;
+            case 2: // Baixo
+                if (fantasmas[i].local.x < 9 && parede[fantasmas[i].local.x + 1][fantasmas[i].local.y] == 0)
+                    fantasmas[i].local.x++;
+                break;
+            case 3: // Direita
+                if (fantasmas[i].local.y < 49 && parede[fantasmas[i].local.x][fantasmas[i].local.y + 1] == 0)
+                    fantasmas[i].local.y++;
+                break;
+        }
+    }
+}
+int main() {
+    int moedas_coletadas = 0, quant_moeda = 50;
+    int quant_frutas = 5, tempo_poder = 10;
+    int andar_cooldown = 500;
     int score = 0;
-    pacman.poder = 0;
-    int fase=0;
-    int parede[25][25];                                     /*criação das paredes*/
-    for(int i=0; i<25; i++){
-        for(int j=0; j<25; j++){
-            parede[i][j]=0;                                 /*esvaziando o lugar*/
+    int fase = 0;
+    int parede[10][50];
+
+    // Inicializa o mapa vazio
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 50; j++) {
+            parede[i][j] = 0;
         }
     }
-    for(int i=0; i<25; i++){
-        for(int j=0; i<25;j++){                             /*declarando as bordas*/
-            parede[0][j]=1;
-            parede[i][0]=1;
-            parede[24][j]=1;
-            parede[i][24]=1;
+
+    // Criação das bordas
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 50; j++) {
+            parede[0][j] = 1;
+            parede[i][0] = 1;
+            parede[9][j] = 1;
+            parede[i][49] = 1;
         }
     }
-    fantasmas fantasma[4];                                  /*4 fantasmas*/
-    for(int i=0; i<4; i++) fantasma[i].vida = 1;
-    frutas *fruta[quant_frutas];                            /*frutas*/
-    moedas *moeda[quant_moeda];                             /*moedas*/
+
+    fantasmas fantasma[4];
+    for (int i = 0; i < 4; i++) {
+        fantasma[i].local.x = rand() % 10;
+        fantasma[i].local.y = rand() % 50;
+        fantasma[i].vida = 1;
+    }
+
+    frutas *fruta[quant_frutas];
+    moedas *moeda[quant_moeda];
     pacman.local.x = 1;
     pacman.local.y = 1;
-    carregar_fase(fase, parede);
+
     srand(time(NULL));
-   while (moedas_coletadas < quant_moeda) {
-        mover_pacman(parede, andar_cooldown);
+
+    // Inicializa moedas e frutas
+    inicializar_moedas(moeda, quant_moeda, parede);
+    inicializar_frutas(fruta, quant_frutas, parede);
+    carregar_fase(fase, parede);
+
+    // Loop principal do jogo
+    while (fase < 5) {
         desenhar_mapa(parede, fantasma, moeda, fruta, quant_moeda, quant_frutas);
+        mover_pacman(parede); // Movimento do Pacman
+        mover_fantasmas(fantasma, 4, parede); // Movimento dos fantasmas
+
+        // Coleta moedas
         for (int i = 0; i < quant_moeda; i++) {
             if (moeda[i] && moeda[i]->local.x == pacman.local.x && moeda[i]->local.y == pacman.local.y) {
                 score += 10;
@@ -173,6 +196,8 @@ int main(){
                 moedas_coletadas++;
             }
         }
+
+        // Coleta frutas
         for (int i = 0; i < quant_frutas; i++) {
             if (fruta[i] && fruta[i]->local.x == pacman.local.x && fruta[i]->local.y == pacman.local.y) {
                 score += 25;
@@ -183,7 +208,19 @@ int main(){
                 pacman.poder = 0;
             }
         }
+
+        // Verifica progressão de fase
+        if (moedas_coletadas >= quant_moeda) {
+            printf("Você completou a fase %d!\n", fase + 1);
+            fase++;
+            moedas_coletadas = 0;
+            inicializar_moedas(moeda, quant_moeda, parede);
+            inicializar_frutas(fruta, quant_frutas, parede);
+        }
+
+        Sleep(100); // Tempo entre as atualizações (suave para o console)
     }
+
     printf("Parabéns! Você completou o jogo com %d pontos!\n", score);
     return 0;
 }
