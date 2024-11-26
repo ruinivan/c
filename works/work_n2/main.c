@@ -5,7 +5,7 @@
 #include <conio.h>
 
 #define ALTURA 10
-#define LARGURA 20
+#define LARGURA 21
 #define FASES 5
 
 typedef struct {
@@ -44,39 +44,39 @@ char mapas[FASES][ALTURA][LARGURA] = {
         "#.#  #.#.#.#.o..#.#",
         "#.####.###.####.#.#",
         "#o...............o#",
-        "###.###.#.#.###.###",
-        "#.#.o..#.#.#.o..#.#",
+        "#.#.###.#.#.###.#.#",
+        "#.#.o...#.#.o...#.#",
         "#.#.###########.#.#",
         "###################"
     },
     {
         "###################",
-        "#...#..........#..#",
-        "#.#.###.#####.#.###",
+        "#.................#",
+        "#.#.###.#####.#.#.#",
         "#.#...........#...#",
         "#.###.#.#######.#.#",
         "#..o..#...o.....#.#",
-        "#.###########.#.###",
-        "#.#..........#.#..#",
-        "#.#.#######o.#.o.#o",
+        "#.##########.##..#a#",
+        "#.#..........#....#",
+        "#...#######o.#.o..#",
         "###################"
     },
     {
         "###################",
         "#........#........#",
-        "#o####.###.####o#.#",
-        "#.#..#.....#...#.#o",
+        "#o####.###.######.#",
+        "#.#..#.....#...o..#",
         "#.#.####.####.###.#",
         "#.#...........#...#",
         "#.#.###########.#.#",
-        "#.#...........o#.#o",
-        "#.#.###########.#.#",
+        "#.#...........o.#o#",
+        "#...###########.#.#",
         "###################"
     },
     {
         "###################",
-        "#.....#.#.........#",
-        "#.#.#.#.#.#.#####.#",
+        "#.......#.........#",
+        "#.#.#.#.#.#.###.#.#",
         "#.#.#.#o#.#.#o..#.#",
         "#.#.#.###.#.#####.#",
         "#.#...........#...#",
@@ -211,7 +211,7 @@ void mover_fantasmas() {
             case 3: novo_y++; break; // Direita
         }
 
-        if (mapas[fase_atual][novo_x][novo_y] != '#' && (novo_x != pacman.posicao.x || novo_y != pacman.posicao.y)) {
+        if (mapas[fase_atual][novo_x][novo_y] != '#' ) {
             fantasmas[i].posicao.x = novo_x;
             fantasmas[i].posicao.y = novo_y;
         }
@@ -227,12 +227,18 @@ void verificar_colisoes() {
             if (pacman.poderoso) {
                 fantasmas[i].vivo = 0;
                 pontos += 200;
+                
+                //revivendo os fantasmas que o pacman matou by:Vitor
+                fantasmas[i].posicao.x = 1; 
+                fantasmas[i].posicao.y = 16; 
+                fantasmas[i].vivo = 1;
             } else {
                 pacman.vidas--;
                 pacman.posicao.x = 1;
                 pacman.posicao.y = 1;
 
                 if (pacman.vidas <= 0) {
+                	Sleep(3000);
                     printf("Game Over! Pontuação final: %d\n", pontos);
                     exit(0);
                 }
@@ -245,12 +251,14 @@ void proxima_fase() {
     fase_atual++;
     if (fase_atual >= FASES) {
         printf("Parabéns! Você completou o jogo com %d pontos!\n", pontos);
+        Sleep(2000);
         exit(0);
     }
     inicializar_jogo();
 }
 
 void atualizar_jogo() {
+	verificar_colisoes();
     if (pacman.poderoso) {
         frutas_tempo--;
         if (frutas_tempo <= 0) {
@@ -258,6 +266,7 @@ void atualizar_jogo() {
         }
     }
     mover_pacman();
+    verificar_colisoes();
     mover_fantasmas();
     verificar_colisoes();
 
@@ -265,7 +274,6 @@ void atualizar_jogo() {
         proxima_fase();
     }
 }
-
 int main() {
     srand(time(NULL));
     inicializar_jogo();
@@ -275,5 +283,6 @@ int main() {
         atualizar_jogo();
         Sleep(100); // Controle da velocidade
     }
+
     return 0;
 }
