@@ -17,9 +17,9 @@ int main(){
         }
         printf("\n");
         printf("Jogada %d: ", i+1);
-        scanf("%d", &pr);
-        if(!(i%2)) a[pr] = 1;
-        if(i%2) a[pr] = 2;
+        do scanf("%d", &pr); while(a[pr-1]==0 || pr<1 || pr>9);
+        if(!(i%2)) a[pr-1] = 1;
+        if(i%2) a[pr-1] = 2;
         if((a[0]==1 && a[1]==1 && a[2]==1) || (a[3]==1 && a[4]==1 && a[5]==1) || (a[6]==1 && a[7]==1 && a[8]==1) || (a[0]==1 && a[4]==1 && a[8]==1) || (a[2]==1 && a[4]==1 && a[6]==1)){
             printf("%s GANHOU!!!", jogador1); 
             break;
