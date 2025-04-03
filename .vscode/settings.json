@@ -3,6 +3,7 @@
     "files.associations": {
         "locale.h": "c",
         "stdio.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "funcoes.h": "c"
     }
 }
